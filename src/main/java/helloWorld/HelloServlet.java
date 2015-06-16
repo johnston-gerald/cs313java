@@ -7,6 +7,7 @@ package helloWorld;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,8 +43,7 @@ public class HelloServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet HelloServlet</h1>");
-            out.println("<p>created by Gerald</p><br><br>");
-            out.println(System.getenv("OPENSHIFT_DATA_DIR"));
+            out.println("<p>created by Gerald</p>");
             out.println("</body>");
             out.println("</html>");
         } finally {
