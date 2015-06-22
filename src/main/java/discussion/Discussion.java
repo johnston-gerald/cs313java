@@ -1,7 +1,6 @@
 package discussion;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,72 +9,83 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/Discussion")
 public class Discussion extends HttpServlet{
     private static final long serialVersionUID = 1L;
 
-    // JDBC driver
-    static final String JDBC_DRIVER="com.mysql.jdbc.Driver";
-    static String db_url;
+    static HttpSession session;
+    
+    String login_user = "";
+    String login_password = "";
+    String login_message = "";
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      
+    
         try {
-            String server = "localhost";
-            String port = "3306";
-            String db = "login";
-            String db_user = "gerrygj";
-            String db_password = "pa55word";
+            int count = 0;
             
-            if(System.getenv("OPENSHIFT_MYSQL_DB_HOST") != null){
-                server = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
-                port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-                db_user = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-                db_password = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-            }
-            
-            //database URL
-            db_url="jdbc:mysql://" + server + ":" + port + "/" + db;
-            
-            // Set response content type
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            String title = "Database Result";
-            String docType =
-                    "<!doctype html>\n";
-            out.println(docType +
-                    "<html>\n" +
-                    "<head><title>" + title + "</title></head>\n" +
-                    "<body bgcolor=\"#f0f0f0\">\n" +
-                    "<h1 align=\"center\">" + title + "</h1>\n");
-            
-            // Register JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
-
+            DatabaseConfig login_db = new DatabaseConfig("login");
+            Connection conn = login_db.Config();
+        
             // Execute SQL query
-            Connection conn = DriverManager.getConnection(db_url,db_user,db_password);
-            String sql = "SELECT COUNT(*) count FROM login";
-            Statement stmt = conn.prepareStatement(sql);
-                
+            String sql = "SELECT COUNT(*) count FROM login "
+                    + "WHERE username = ? AND password = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, login_user);
+            pstmt.setString(2, login_password);
+
             // Extract data from result set
-            ResultSet rs = stmt.executeQuery(sql);
-            
+            ResultSet rs = pstmt.executeQuery();
+
             // Extract data from result set
             while(rs.next()){
                 //Retrieve by column name
-                int count  = rs.getInt("count");
+                count  = rs.getInt("count");
 //                       int age = rs.getInt("age");
 //                       String first = rs.getString("first");
 //                       String last = rs.getString("last");
-                
-                //Display values
-                out.println("Count: " + count + "<br>");
             }
-            out.println("</body></html>");
-        } catch (ClassNotFoundException | SQLException ex) {
+            
+            conn.close();   //close connection
+            
+            if(count == 1){
+                session = request.getSession();
+                session.setAttribute("username", login_user);
+                
+                //reset variables
+                login_user = "";
+                login_message = "";
+            }
+            
+            if(session != null){    //successful login
+                if(session.getAttribute("username") != null){
+                    response.sendRedirect("Comments");
+//                    request.getRequestDispatcher("/assignments/discussionView.jsp").forward(request, response);
+                }
+                else {  //unsuccessful login
+                    request.setAttribute("login_message", login_message);
+                    request.getRequestDispatcher("/assignments/discussionLogin.jsp").forward(request, response);
+                }
+            } else {    //no session yet
+                request.setAttribute("login_message", login_message);
+                request.getRequestDispatcher("/assignments/discussionLogin.jsp").forward(request, response);
+            }
+        } catch (SQLException ex) {
             Logger.getLogger(Discussion.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        login_user = request.getParameter("username");
+        login_password = request.getParameter("password");
+        
+        login_message = "Incorrect username or password.";
+        
+        response.sendRedirect("Discussion");
     }
 } 
