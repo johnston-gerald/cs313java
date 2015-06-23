@@ -2,8 +2,6 @@ package facebookDemo;
 
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
-import facebook4j.Friend;
-import facebook4j.ResponseList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
