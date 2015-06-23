@@ -10,7 +10,7 @@
 <div> 
     <!--<a href="SignIn">Click here to login with Facebook</a>-->
      
-    <a href="../ShowFriends">Click here to see your friends</a>
+    <a href="../ShowFriends">Click here to see your name</a>
 </div> 
   
 </body> 

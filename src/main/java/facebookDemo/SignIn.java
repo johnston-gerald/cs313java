@@ -22,7 +22,10 @@ public class SignIn extends HttpServlet {
             throws ServletException, IOException {
         
         Facebook facebook = new FacebookFactory().getInstance();
-        facebook.setOAuthAppId("913876445325753", "22b295234e71828d3ed5051720e78b9f");
+        
+        String fbsecret = System.getenv("OPENSHIFT_FACEBOOK_APP_SECRET");
+        
+        facebook.setOAuthAppId("913876445325753", fbsecret);
         String accessTokenString = "947c349b9e93918f532bf2c12ecc5cc1";
         AccessToken at = new AccessToken(accessTokenString);
         // Set access token.
