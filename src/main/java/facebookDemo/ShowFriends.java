@@ -29,10 +29,10 @@ public class ShowFriends extends HttpServlet {
 
         try { 
             out.write("Your name is: " + facebook.getName() + "\n\n"); 
-            ResponseList<Friend> list = facebook.getFriends(); 
-            for (Friend friend : list) { 
-               out.write(friend.getName() + "\n"); 
-            }
+//            ResponseList<Friend> list = facebook.getFriends(); 
+//            for (Friend friend : list) { 
+//               out.write(friend.getName() + "\n"); 
+//            }
 
         } catch (IllegalStateException | FacebookException e) { 
         } 
