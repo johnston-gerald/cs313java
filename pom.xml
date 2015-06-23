@@ -53,11 +53,16 @@
                     <version>2.1</version>
                     <scope>provided</scope>
                 </dependency>
-	 <dependency>
-	  <groupId>mysql</groupId>
-	  <artifactId>mysql-connector-java</artifactId>
-	  <version>5.1.35</version>
-	 </dependency>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.35</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.facebook4j</groupId>
+                    <artifactId>facebook4j-core</artifactId>
+                    <version>2.2.2</version>
+               </dependency>
 	</dependencies>
 	<profiles>
 		<profile>
