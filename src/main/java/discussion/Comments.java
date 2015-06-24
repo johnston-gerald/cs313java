@@ -2,7 +2,6 @@ package discussion;
 
 import static discussion.Discussion.session;
 import java.io.IOException;
-import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +26,7 @@ public class Comments extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        ArrayList<CommentModel> commentList = new ArrayList<CommentModel>();
+        ArrayList<CommentModel> commentList = new ArrayList<>();
         
         try {
 //            int count = 0;
@@ -55,13 +54,6 @@ public class Comments extends HttpServlet {
                 comment.setUsername(rs.getString("comment_username"));
                 
                 commentList.add(comment);
-//                comment = rs.getString("comment");
-//                date = rs.getTimestamp("comment_date").toString();
-//                username = rs.getString("comment_username");
-//                count  = rs.getInt("count");
-//                       int age = rs.getInt("age");
-//                       String first = rs.getString("first");
-//                       String last = rs.getString("last");
             }
             
             conn.close();   //close connection
