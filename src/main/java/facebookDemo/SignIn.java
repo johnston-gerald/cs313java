@@ -30,28 +30,18 @@ public class SignIn extends HttpServlet {
         if(System.getenv("OPENSHIFT_FACEBOOK_APP_SECRET") != null){
             fbsecret = System.getenv("OPENSHIFT_FACEBOOK_APP_SECRET");
         } else {
-            Properties prop = new Properties();
+//            Properties prop = new Properties();
             InputStream input = null;
 
             try {
                 input = new FileInputStream("C:/java/apache-tomcat-7.0.62/webapps/java/src/main/java/facebookDemo/config.properties");
-
-                // load a properties file
+                Properties prop = new Properties();
                 prop.load(input);
-                
                 fbsecret = prop.getProperty("fbsecret");
                 
             } catch (IOException ex) {
-            } finally {
-                if (input != null) {
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                    }
-                }
-            }
+            } 
         }
-       
         
         facebook.setOAuthAppId("913876445325753", fbsecret);
         String accessTokenString = "947c349b9e93918f532bf2c12ecc5cc1";
