@@ -34,16 +34,15 @@ public class CallBack extends HttpServlet {
         String login_message = "";
 
         try {
-            PrintWriter out = response.getWriter();
-            
             facebook.getOAuthAccessToken(oauthCode);
             
             //https://developers.facebook.com/docs/php/GraphObject/4.0.0#user-instance-methods
             login_user = facebook.getId();
 //            login_user = "fudged bad login";    //for testing purposes
             int count = 0;
-            
-            out.write(login_user + "\n\n");
+
+//            PrintWriter out = response.getWriter();
+//            out.write(login_user + "\n\n");
             
             DatabaseConfig login_db = new DatabaseConfig("authenticate");
             Connection conn = login_db.Config();
