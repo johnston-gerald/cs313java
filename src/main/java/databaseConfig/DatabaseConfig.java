@@ -27,11 +27,13 @@ public class DatabaseConfig {
     
     public Connection Config(){
         try {
+            //local settings (default)
             server = "localhost";
             port = "3306";
             db_user = "gerrygj";
             db_password = "pa55word";
 
+            //remote settings
             if(System.getenv("OPENSHIFT_MYSQL_DB_HOST") != null){
                 server = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
                 port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
