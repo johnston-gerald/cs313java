@@ -6,7 +6,7 @@
         <title>Bad Login</title>
     </head>
     <body>
-        <p>Your Facebook account is unauthorized. Please sign out from Facebook and 
+        <p>Your Facebook or Google account is unauthorized. Please sign out from and 
             sign in with a valid account.</p>
     </body>
 </html>

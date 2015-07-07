@@ -7,6 +7,6 @@
         <title>Welcome</title>
     </head>
     <body>
-        <p>Welcome. You are logged in as <c:out value="${username}" /></p>
+        <p>Welcome. You are logged in as <c:out value="${user}" /></p>
     </body>
 </html>

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import facebook4j.Facebook; 
 import facebook4j.FacebookException;
-import java.io.PrintWriter;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.logging.Level;
@@ -41,9 +40,6 @@ public class CallBack extends HttpServlet {
 //            login_user = "fudged bad login";    //for testing purposes
             int count = 0;
 
-//            PrintWriter out = response.getWriter();
-//            out.write(login_user + "\n\n");
-            
             DatabaseConfig login_db = new DatabaseConfig("authenticate");
             Connection conn = login_db.Config();
         
@@ -61,12 +57,11 @@ public class CallBack extends HttpServlet {
                 //Retrieve by column name
                 count  = rs.getInt("count");
             }
-            
             conn.close();   //close connection
             
             if(count == 1){
                 session = request.getSession();
-                session.setAttribute("username", login_user);
+                session.setAttribute("user", login_user);
                 
                 //reset variables
                 login_user = "";
@@ -74,7 +69,7 @@ public class CallBack extends HttpServlet {
             }
             
             if(session != null){    //successful login
-                if(session.getAttribute("username") != null){
+                if(session.getAttribute("user") != null){
                     request.getRequestDispatcher("/loginApp/welcome.jsp").forward(request, response);
                 }
                 else {  //unsuccessful login
