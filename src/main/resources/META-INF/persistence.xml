@@ -3,6 +3,9 @@
     <persistence-unit name="majorJPA" transaction-type="RESOURCE_LOCAL">
         <class>majors.Major</class>
         <class>majors.Student</class>
+        <properties>  
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+        </properties>
     </persistence-unit>
     <persistence-unit name="libaryJPA" transaction-type="RESOURCE_LOCAL">
         <class>libary.Author</class>
