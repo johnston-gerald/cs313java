@@ -1,8 +1,10 @@
 package majors;
 
+import databaseConfig.JPAConfig;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,10 +20,13 @@ public class MajorTester extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("majorJpa");
-        EntityManager em = emf.createEntityManager();
 
+        JPAConfig majors_db = new JPAConfig("majors");
+        Map<String, String> properties = majors_db.Config();
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("majorJPA", properties);
+        EntityManager em = emf.createEntityManager();
+        
 //        Major major = em.find(Major.class, 1);
         
         //create new major

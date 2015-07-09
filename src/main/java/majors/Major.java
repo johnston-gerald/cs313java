@@ -19,7 +19,7 @@ public class Major implements Serializable {
     private List<Student> students;
 
     private String name;
-
+        
     public int getId() {
            return id;
     }
