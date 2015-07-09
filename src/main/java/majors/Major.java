@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 public class Major implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
     
     @OneToMany(mappedBy = "major")
