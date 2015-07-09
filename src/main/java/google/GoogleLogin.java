@@ -77,7 +77,7 @@ public class GoogleLogin extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(GoogleLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.sendRedirect("/loginApp/index.jsp");
+//        response.sendRedirect("/loginApp/index.jsp");
 //        request.getRequestDispatcher("/loginApp/index.jsp").forward(request, response);
     }
 }

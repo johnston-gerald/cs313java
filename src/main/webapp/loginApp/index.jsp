@@ -33,7 +33,8 @@
                     xhr.open('POST', '../GoogleLogin');
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                     xhr.onload = function() {
-                        console.log('Signed in as: ' + xhr.responseText);
+//                        console.log('Signed in as: ' + xhr.responseText);
+                        location.reload();
                     };
                     xhr.send('id=' + id);
                 };
