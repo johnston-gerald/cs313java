@@ -51,7 +51,7 @@ public class MajorTester extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet MajorTester</title>");            
+            out.println("<title>Major Tester</title>");            
             out.println("</head>");
             out.println("<body>");
 //                out.println("Major: " + major.getName());
@@ -97,6 +97,6 @@ public class MajorTester extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 }

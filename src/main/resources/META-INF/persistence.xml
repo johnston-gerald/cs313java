@@ -4,8 +4,8 @@
         <class>majors.Major</class>
         <class>majors.Student</class>
     </persistence-unit>
-    <persistence-unit name="libaryJPA" transaction-type="RESOURCE_LOCAL">
-        <class>libary.Author</class>
-        <class>libary.Book</class>
+    <persistence-unit name="libraryJPA" transaction-type="RESOURCE_LOCAL">
+        <class>library.Author</class>
+        <class>library.Book</class>
     </persistence-unit>
 </persistence>
