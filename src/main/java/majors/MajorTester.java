@@ -63,25 +63,25 @@ public class MajorTester extends HttpServlet {
 //                    out.println("Major: " + major.getName() + "<br>");
 //                }
             
-//            Query studentQuery = em.createQuery("SELECT s FROM Student s");
-//            List<Student> students = studentQuery.getResultList(); 
-//
-//            for (Student student : students) {
-//                out.println("Student: " + student.getName() + " has major: " + student.getMajor().getName() + "<br>");
-//            }
-            
-            Query query = em.createQuery("SELECT m FROM Major m");
-            List<Major> majors = query.getResultList(); 
+            Query studentQuery = em.createQuery("SELECT s FROM Student s");
+            List<Student> students = studentQuery.getResultList(); 
 
-            for (Major major : majors) {
-                out.println("Major: " + major.getName() + "<br>");
-
-                for (Student student : major.getStudents()) {
-                       out.println("&nbsp;&nbsp;&nbsp;&nbsp;Student: " + student.getName() + "<br>");
-                }
-                
-                out.println("<br>");
+            for (Student student : students) {
+                out.println("Student: " + student.getName() + " has major: " + student.getMajor().getName() + "<br>");
             }
+            
+//            Query query = em.createQuery("SELECT m FROM Major m");
+//            List<Major> majors = query.getResultList(); 
+//
+//            for (Major major : majors) {
+//                out.println("Major: " + major.getName() + "<br>");
+//
+//                for (Student student : major.getStudents()) {
+//                       out.println("&nbsp;&nbsp;&nbsp;&nbsp;Student: " + student.getName() + "<br>");
+//                }
+//                
+//                out.println("<br>");
+//            }
             
             out.println("</body>");
             out.println("</html>");
