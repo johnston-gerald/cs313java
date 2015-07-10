@@ -10,7 +10,7 @@
         <title>Login</title>
     </head>
     <body>
-        <h1>Google Login</h1>
+        <h1>Login</h1>
         <c:if test="${sessionScope.isValid != 'valid'}">
             
             <p>Please sign in with Google or Facebook:</p>
@@ -33,7 +33,6 @@
                     xhr.open('POST', '../GoogleLogin');
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                     xhr.onload = function() {
-//                        console.log('Signed in as: ' + xhr.responseText);
                         location.reload();
                     };
                     xhr.send('id=' + id);
@@ -41,6 +40,9 @@
             </script><br>
 
             <a href="/SignIn"><img src="../loginApp/images/facebook.png" alt="Sign in with Facebook" style="width:120px;height:36px;border:0;"></a>
+            <br><br>
+            
+            <c:out value="${badLogin}" />
         
         </c:if>
         
@@ -48,21 +50,20 @@
         
             <p>Welcome. You are logged in as <c:out value="${user}" /></p><br>
             
-            <a href="#" onclick="signOut();">Sign out of Google</a>
+            <a href="#" onclick="googleSignOut()">Sign out of Google</a>
             <script>
-                function signOut() {
-                    var auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signOut().then(function () {
-                        console.log('User signed out.');
-
+                function googleSignOut(){
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '../GoogleLogin');
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                     xhr.send('logout=logout');
-                    });
+                    
+                    var url = window.location.href;
+                    window.location.assign("https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=" + url);
                 }
-            </script>
-        
+            </script><br><br>
+            
+            <a href="../SignOut">Sign out of Facebook</a><br>
         </c:if>
     </body>
 </html>

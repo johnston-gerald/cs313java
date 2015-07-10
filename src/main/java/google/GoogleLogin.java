@@ -12,15 +12,10 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author gerrygj
- */
 @WebServlet(name = "GoogleLogin", urlPatterns = {"/GoogleLogin"})
 public class GoogleLogin extends HttpServlet {
 
     static HttpSession session;
-//    private static String login_user = "";
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,14 +29,10 @@ public class GoogleLogin extends HttpServlet {
 
         String login_user = "";
         
-        if (request.getParameter("logout") == "logout") {
-            session.setAttribute("isValid", "invalid");
-        }
-        
         login_user = request.getParameter("id");
+//        login_user = "fudged bad login";    //for testing purposes
         
         try {
-//            String login_message = "";
             int count = 0;
             
             DatabaseConfig login_db = new DatabaseConfig("authenticate");
@@ -63,21 +54,26 @@ public class GoogleLogin extends HttpServlet {
             }
             conn.close();   //close connection
             
+//            count = 1;  //fudged good login for testing purposes
             session = request.getSession();
             if(count == 1){
-//                session = request.getSession();
                 session.setAttribute("user", login_user);
                 session.setAttribute("isValid", "valid");
+                session.setAttribute("badLogin", "");
                 
                 //reset variables
                 login_user = "";
             } else {
                 session.setAttribute("isValid", "invalid");
+                session.setAttribute("badLogin", "Your account has not been authorized. Please sign in with an authorized account.");
+            }
+            
+            if ("logout".equals(request.getParameter("logout"))) {
+                session.setAttribute("isValid", "invalid");
+                session.setAttribute("badLogin", "");
             }
         } catch (SQLException ex) {
             Logger.getLogger(GoogleLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        response.sendRedirect("/loginApp/index.jsp");
-//        request.getRequestDispatcher("/loginApp/index.jsp").forward(request, response);
     }
 }

@@ -1,4 +1,4 @@
-package facebookDemo;
+package facebook;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -13,10 +13,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- *
- * @author gerrygj
- */
 @WebServlet(name = "SignIn", urlPatterns = {"/SignIn"})
 public class SignIn extends HttpServlet {
 
@@ -30,11 +26,10 @@ public class SignIn extends HttpServlet {
         if(System.getenv("OPENSHIFT_FACEBOOK_APP_SECRET") != null){
             fbsecret = System.getenv("OPENSHIFT_FACEBOOK_APP_SECRET");
         } else {
-//            Properties prop = new Properties();
             InputStream input = null;
 
             try {
-                input = new FileInputStream("C:/java/apache-tomcat-7.0.62/webapps/java/src/main/java/facebookDemo/config.properties");
+                input = new FileInputStream("C:/java/apache-tomcat-7.0.62/webapps/java/src/main/java/facebook/config.properties");
                 Properties prop = new Properties();
                 prop.load(input);
                 fbsecret = prop.getProperty("fbsecret");

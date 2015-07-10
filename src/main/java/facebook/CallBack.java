@@ -1,4 +1,4 @@
-package facebookDemo;
+package facebook;
 
 import databaseConfig.DatabaseConfig;
 import java.io.IOException;
@@ -14,10 +14,6 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author gerrygj
- */
 @WebServlet(name = "CallBack", urlPatterns = {"/CallBack"})
 public class CallBack extends HttpServlet {
     
@@ -38,6 +34,7 @@ public class CallBack extends HttpServlet {
             //https://developers.facebook.com/docs/php/GraphObject/4.0.0#user-instance-methods
             login_user = facebook.getId();
 //            login_user = "fudged bad login";    //for testing purposes
+            
             int count = 0;
 
             DatabaseConfig login_db = new DatabaseConfig("authenticate");
@@ -59,25 +56,21 @@ public class CallBack extends HttpServlet {
             }
             conn.close();   //close connection
             
+            session = request.getSession();
             if(count == 1){
-                session = request.getSession();
                 session.setAttribute("user", login_user);
+                session.setAttribute("isValid", "valid");
+                session.setAttribute("badLogin", "");
                 
                 //reset variables
                 login_user = "";
-                login_message = "";
+            } else {
+                session.setAttribute("isValid", "invalid");
+                session.setAttribute("badLogin", "Your account has not been authorized. Please sign in with an authorized account.");
             }
             
-            if(session != null){    //successful login
-                if(session.getAttribute("user") != null){
-                    request.getRequestDispatcher("/loginApp/welcome.jsp").forward(request, response);
-                }
-                else {  //unsuccessful login
-                    request.getRequestDispatcher("/loginApp/badLogin.jsp").forward(request, response);
-                }
-            } else {    //no session yet
-                request.getRequestDispatcher("/loginApp/badLogin.jsp").forward(request, response);
-            }
+            request.getRequestDispatcher("/loginApp/index.jsp").forward(request, response);
+            
         } catch (SQLException | FacebookException | IllegalStateException ex) {
             Logger.getLogger(CallBack.class.getName()).log(Level.SEVERE, null, ex);
         }
