@@ -54,11 +54,11 @@ public class GoogleLogin extends HttpServlet {
             }
             conn.close();   //close connection
             
-//            count = 1;  //fudged good login for testing purposes
+            count = 1;  //fudged good login for testing purposes
             session = request.getSession();
             if(count == 1){
                 session.setAttribute("user", login_user);
-                session.setAttribute("isValid", "valid");
+                session.setAttribute("isValid", "gvalid");
                 session.setAttribute("badLogin", "");
                 
                 //reset variables

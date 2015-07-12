@@ -11,8 +11,32 @@
     </head>
     <body>
         <h1>Login</h1>
-        <c:if test="${sessionScope.isValid != 'valid'}">
-            
+        
+        <c:choose><c:when test="${sessionScope.isValid == 'gvalid' || sessionScope.isValid == 'fvalid'}">
+
+            <p>Welcome. You are logged in as <c:out value="${user}" /></p><br>
+                
+            <c:if test="${sessionScope.isValid == 'gvalid'}">
+                <a href="#" onclick="googleSignOut()">Sign out of Google</a>
+                <script>
+                    function googleSignOut(){
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '../GoogleLogin');
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        xhr.send('logout=logout');
+
+                        var url = window.location.href;
+                        window.location.assign("https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=" + url);
+                    }
+                </script>
+            </c:if>
+
+            <c:if test="${sessionScope.isValid == 'fvalid'}">
+                <a href="../SignOut">Sign out of Facebook</a>
+            </c:if>
+
+        </c:when><c:otherwise>
+
             <p>Please sign in with Google or Facebook:</p>
             <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
             <script>
@@ -44,26 +68,7 @@
             
             <c:out value="${badLogin}" />
         
-        </c:if>
+        </c:otherwise></c:choose>
         
-        <c:if test="${sessionScope.isValid == 'valid'}">
-        
-            <p>Welcome. You are logged in as <c:out value="${user}" /></p><br>
-            
-            <a href="#" onclick="googleSignOut()">Sign out of Google</a>
-            <script>
-                function googleSignOut(){
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', '../GoogleLogin');
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.send('logout=logout');
-                    
-                    var url = window.location.href;
-                    window.location.assign("https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=" + url);
-                }
-            </script><br><br>
-            
-            <a href="../SignOut">Sign out of Facebook</a><br>
-        </c:if>
     </body>
 </html>
